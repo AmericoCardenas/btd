@@ -1,0 +1,257 @@
+body{
+    background: #434343;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #434343, #434343);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #434343, #434343); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    overflow-y: hidden !important;
+  }
+
+.btnmenu{
+    height: 100% !important;
+    width: auto !important;
+}
+
+.btn-group {
+  height: 100% !important;
+}
+
+.sidemenu{
+    background: #434343;  /* fallback for old browsers */
+}
+
+.swal-overlay {
+    background-color: rgba(43, 165, 137, 0.45);
+  }
+
+.btnslide{
+    width: 100%;
+    height: auto;
+}
+
+.ul-slide{
+    background-color:  #434343;
+}
+
+.span-menu{
+    color:orange !important; font-weight:bolder;
+  }
+
+  .islide{
+    color:#1b76fa !important;
+  }
+
+  .sp{
+    color:#1b76fa !important;
+    font-weight: bolder !important;
+  }
+
+  .btnadd{
+    background-color: rgb(11, 94, 215) !important;
+  }
+
+  .btndelete{
+    background-color:rgb(244, 68, 83) !important;
+  }
+
+  table,td,th{
+    text-align: center !important;
+  }
+
+  th{
+    background-color: #0B5ED7!important;
+  }
+
+  input{
+    text-align: center !important;
+    text-transform: uppercase !important;
+  }
+
+  input[type=search]{
+    background-color: #f2fcfe !important;
+    width:200px !important;
+    height:25px !important;
+  }
+
+  input[type=search]:focus {
+    background-color: yellow !important;
+  }
+
+    .z-depth-5, .modal {
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
+      background-color: transparent !important;
+      text-align: center !important;
+    }
+
+
+    .btn-danger{
+      background-color:#BB2D3B !important;
+    }
+
+    .lb_modal{
+      margin-top: 15px !important;
+    }
+
+    .modal-footer{
+      text-align: center !important;
+    }
+
+    select,option{
+      text-align: center !important;
+    }
+
+  .btn-succes{
+    background-color:#157347 !important;
+  }
+
+  .btn-warning{
+    background-color: #FFCA2C !important;
+  }
+
+  .side-nav {
+    transform: translateX(0%) !important;
+}
+
+.sidenav{
+  background-color:#434343 !important;
+  width:230px !important;
+}
+
+.name{
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+h1{
+  font-size: 35px !important;
+  color: white !important;
+}
+
+.modal-body,label{
+  color: #2BBBAD !important;
+}
+
+.form-control{
+  background-color: #26a69a !important;
+  color: #f2fcfe !important;
+  font-weight: bold !important;
+}
+
+.table-fixed{
+height: 450px !important;
+}
+
+ /* Style the Image Used to Trigger the Modal */
+ #myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal-img {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.mc-img {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.mc-img, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .mc-image {
+    width: 100%;
+  }
+}
+
+.img{
+  cursor: pointer !important;
+}
+
+.ACTIVO{
+  background-color:#b1faa9 !important;
+  font-weight: bold !important
+}
+
+.CORRALON{
+  background-color:  #fc7a74 !important;
+  font-weight: bold !important
+}
+
+.TALLER{
+  background-color:  #faf58f !important;
+  font-weight: bold !important
+}
+
+.INGRESO{
+  background-color:  #b1faa9 !important;
+  font-weight: bold !important
+}
+
+.EGRESO{
+  background-color:  #fc7a74 !important;
+  font-weight: bold !important
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  position: absolute;
+  opacity: 100 !important;
+  pointer-events: auto !important;
+}
+
