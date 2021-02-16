@@ -1345,6 +1345,7 @@ class FunctionsController extends CI_Controller {
 	public function ordenes(){
 		$id = $this->input->post('id_user');
 		$datos['tb'] = $this->FunctionsModel->get_ordenes();
+		$datos['proveedores'] = $this->FunctionsModel->get_proveedores();
 		$datos['user'] = $this->FunctionsModel->usuario($id);
 		$this->load->view('almacen/ordenes',$datos);
 	}
@@ -1361,11 +1362,26 @@ class FunctionsController extends CI_Controller {
 		}	
 	}
 
+	public function proveedor_rfc(){
+		$proveedor = $this->input->post('proveedor');
+		$datos = $this->FunctionsModel->proveedor_rfc($proveedor);
+		if($datos){
+			// $proveedor = array($datos);
+			echo json_encode($datos);
+			// return $datos;
+		}else{
+			return false;
+		}	
+	}
+
 	public function update_orden(){
 		
 		$id = $this->input->post('id');
 		$fecha = $this->input->post('fecha');
 		$proveedor = strtoupper($this->input->post('proveedor'));
+		$rfc = strtoupper($this->input->post('rfc'));
+		$folio = strtoupper($this->input->post('folio'));
+		$metodo = strtoupper($this->input->post('metodo'));
 		$subtotal = $this->input->post('subtotal');
 		$iva = $this->input->post('iva');
 		$total = $this->input->post('total');
@@ -1386,6 +1402,9 @@ class FunctionsController extends CI_Controller {
 			$datos = array(
 				'fecha' => $fecha,	
 				'proveedor' => $proveedor,
+				'rfc' => $rfc,
+				'folio' => $folio,
+				'metodo' => $metodo,
 				'subtotal' => $subtotal,
 				'iva' => $iva,
 				'total' => $total,
@@ -1405,6 +1424,9 @@ class FunctionsController extends CI_Controller {
 				$datos = array(
 					'fecha' => $fecha,	
 					'proveedor' => $proveedor,
+					'rfc' => $rfc,
+					'folio' => $folio,
+					'metodo' => $metodo,
 					'subtotal' => $subtotal,
 					'iva' => $iva,
 					'total' => $total,

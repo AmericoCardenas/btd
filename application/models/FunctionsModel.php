@@ -55,6 +55,13 @@ class FunctionsModel extends CI_Model{
 
         }
 
+        public function proveedor_rfc($proveedor){
+            $query = $this->db->query("SELECT RFC FROM proveedores WHERE NOMBRE = '$proveedor' ");
+            $result= $query->result_array();
+            return $result;
+
+        }
+
         //UNIDADES
         public function get_unidades(){
             $query = $this->db->query('SELECT * FROM unidades');

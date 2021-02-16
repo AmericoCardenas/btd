@@ -29,11 +29,15 @@
                     <th>ID</th>
                     <th>FECHA</th>
                     <th>PROVEEDOR</th>
+                    <th>RFC</th>
+                    <th>FOLIO</th>
+                    <th>METODO</th>
                     <th>SUBTOTAL</th>
                     <th>IVA</th>
                     <th>TOTAL</th>
                     <th>COMPROBANTE</th>
                     <th>CHECK</th>
+                    <th>PDF</th>
                     <th>Editar</th>
                     <?php if($area == "SISTEMAS" || $area == "GERENCIA"){ ?>
                     <th>Eliminar</th>
@@ -48,9 +52,12 @@
                     <td><?php echo $value['ID']; ?></td>
                     <td><?php echo date('d/m/Y',strtotime($value['FECHA'])); ?></td>
                     <td><?php echo $value['PROVEEDOR']; ?></td>
-                    <td><?php echo $value['SUBTOTAL'] ."$";?></td>
-                    <td><?php echo $value['IVA'] ."$";?></td>
-                    <td><?php echo $value['TOTAL'] ."$";?></td>
+                    <td><?php echo $value['RFC']; ?></td>
+                    <td><?php echo $value['FOLIO']; ?></td>
+                    <td><?php echo $value['METODO']; ?></td>
+                    <td><?php echo $value['SUBTOTAL'];?></td>
+                    <td><?php echo $value['IVA'];?></td>
+                    <td><?php echo $value['TOTAL'];?></td>
                     <td><a
                             href="<?php echo base_url();?>uploads/<?php if($comprobante!=""){echo $comprobante;}else{echo 'default.jpg';}?>"><img
                                 src="<?php echo base_url();?>application/assets/img/documento.png"
@@ -60,6 +67,11 @@
                             <input class="form-check-input req_id" type="checkbox" value="<?php echo $value['ID'];?>"
                                 id="flexCheckDefault req_id">
                         </div>
+                    </td>
+
+                    <td>
+                    <button title="PDF" type="button" class="btn btn-warning" id="btn-pdf" data-toggle="modal" data-target=".modal_pdf">
+                    <i class="fas fa-file-pdf"></i></button>
                     </td>
 
                     <td><button title="Editar" type="button" class="btn btnedit" id="btn-edit" data-bs-toggle="modal"
@@ -100,8 +112,30 @@
                 <hr>
 
                 <label>PROVEEDOR</label>
-                <input type="text" name="proveedor" id="proveedor_edt" class="form-control" required>
+                <select  name="proveedor" id="proveedor_edt" class="form-control proveedor" required>
+                <option value="">SELECCIONAR PROVEEDOR</option>
+                <?php foreach($proveedores as $row => $value){ ?>
+                <option value="<?php echo $value['NOMBRE'];?>"><?php echo $value['NOMBRE'];?></option>
+                <?php } ?>
+                </select>
                 <hr>
+
+                <label>RFC</label>
+                <input type="text" name="rfc" id="rfc_edt" class="form-control rfc" required readonly>
+                <hr>
+
+                <label>FOLIO</label>
+                <input type="text" name="folio" id="folio_edt" class="form-control" required>
+                <hr>
+
+                <label>METODO DE PAGO</label>
+                    <select name="metodo" id="metodo_edt" class="form-control">
+                        <option value="">SELECCIONAR METODO DE PAGO:</option>
+                        <option value="EFECTIVO">EFECTIVO</option>
+                        <option value="CHEQUE">CHEQUE</option>
+                        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                    </select>
+                <hr>      
 
                 <label>SUBTOTAL</label>
                 <input type="text" name="subtotal" id="subtotal_edt" class="form-control subtotal"
@@ -138,6 +172,16 @@
 
         </div>
     </div>
+</div>
+
+<!-- Large modal -->
+
+<div class="modal fade modal_pdf" id="modal_pdf" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
 </div>
 
 
@@ -196,7 +240,7 @@ $(document).ready(function() {
                 }).done(function() {
                     swal({
                         title: "Eliminado",
-                        text: "Requisicion eliminada exitosamente",
+                        text: "Orden eliminada exitosamente",
                         icon: "success",
                     }).then(function() {
                         $("#main").load(
@@ -231,6 +275,9 @@ $(document).ready(function() {
                         $("#id_edt").val(result.ID);
                         $("#fecha_edt").val(result.FECHA);
                         $("#proveedor_edt").val(result.PROVEEDOR);
+                        $("#rfc_edt").val(result.RFC);
+                        $("#folio_edt").val(result.FOLIO);
+                        $("#metodo_edt").val(result.METODO);
                         $("#subtotal_edt").val(result.SUBTOTAL);
                         $("#iva_edt").val(result.IVA);
                         $("#total_edt").val(result.TOTAL);
@@ -242,7 +289,7 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('.subtotal').on('keypress', function() {
+    $('.subtotal').on('keypress', function(event) {
         var subtotal = $(this).val();
 
         var subtotal2 = parseFloat(subtotal);
@@ -255,8 +302,31 @@ $(document).ready(function() {
         $('.iva').val(iva);
         $('.total').val(total2);
 
-    })
+    });
 });
+
+$(document).ready(function() {
+    $('.proveedor').on('change', function(event) {
+        var proveedor = $(this).val();
+        if (proveedor != "") {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>FunctionsController/proveedor_rfc",
+                data: {
+                    proveedor: proveedor
+                },
+                success: function(result) {
+                    var result = JSON.parse(result);
+                    $.each(result, function(i, result) {
+                        $(".rfc").val(result.RFC);
+                    });
+                },
+            });
+        }
+
+    });
+});
+
 
 
 //UPDATE//
@@ -268,11 +338,15 @@ $(document).ready(function() {
                 var id = $("#id_edt").val();
                 var fecha = $("#fecha_edt").val();
                 var proveedor = $("#proveedor_edt").val();
+                var rfc = $("#rfc_edt").val();
+                var folio = $("#folio_edt").val();
+                var metodo = $("#metodo_edt").val();
                 var subtotal = $("#subtotal_edt").val();
                 var iva = $("#iva_edt").val();
                 var total = $("#total_edt").val();
                 //COMPROBAR//
-                if (fecha != "" || proveedor != "" || subtotal != "") {
+                if (fecha != "" || proveedor != "" || rfc != "" || folio != "" || metodo != "" ||
+                subtotal != "" || iva != "" || total != "") {
                     $.ajax({
                         type: "POST",
                         url: "<?php echo base_url(); ?>FunctionsController/update_orden",
