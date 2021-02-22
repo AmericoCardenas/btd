@@ -55,6 +55,13 @@ class FunctionsModel extends CI_Model{
 
         }
 
+        public function proveedorbyname($proveedor){
+            $query = $this->db->query("SELECT * FROM proveedores WHERE NOMBRE = '$proveedor' ");
+            $result= $query->result_array();
+            return $result;
+
+        }
+
         public function proveedor_rfc($proveedor){
             $query = $this->db->query("SELECT RFC FROM proveedores WHERE NOMBRE = '$proveedor' ");
             $result= $query->result_array();
@@ -167,6 +174,12 @@ class FunctionsModel extends CI_Model{
 
         public function orden($id){
             $query = $this->db->query("SELECT * FROM ordenes WHERE ID = '$id' ");
+            $result= $query->result_array();
+            return $result;
+        }
+
+        public function reqbyorder($id){
+            $query = $this->db->query("SELECT * FROM requisiciones WHERE ORDEN = '$id' ");
             $result= $query->result_array();
             return $result;
         }

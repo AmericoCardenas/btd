@@ -3,6 +3,7 @@
 <link rel="icon" href="<?php echo base_url();?>application/assets/img/data.ico">
 
 <head>
+    
     <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     <link rel="stylesheet" href="<?php echo base_url();?>application/assets/img/coding.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -47,6 +48,11 @@
 
     <!-- Magnific Popup core JS file -->
     <script src="<?php echo base_url();?>application/assets/js/jquery.magnific-popup.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.0/jspdf.umd.min.js" integrity="sha512-GctVjwNNH1cjfoaMyi3WTXq/Y+NDpQ2q+tVPGtNNCgmKiokNiWR68MMYbgaCLg5IgHgZ3dM8EVcmRpJVBLkaiA==" crossorigin="anonymous"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+
 </head>
 
 

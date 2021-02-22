@@ -388,6 +388,21 @@ class FunctionsController extends CI_Controller {
 
 #EXPORTAR A EXCEL
 
+#EXPORTAR A PDF
+	// public function convertpdf(){
+
+	// 	$html = $this->input->post('modalpdf');
+	// 	$this->load->library('pdf');
+	// 	$this->dompdf->loadHtml($html);
+	// 	$this->dompdf->setPaper('A4', 'landscape');
+	// 	$this->dompdf->render();
+	// 	$this->dompdf->stream("ordenes.pdf", array("Attachment"=>0));
+	// }
+#EXPORTAR A PDF
+
+
+
+
 #CATALOGO
 
 	//BANCOS
@@ -482,6 +497,19 @@ class FunctionsController extends CI_Controller {
 		}else{
 			return false;
 		}	
+	}
+
+	public function proveedorbyname(){
+		$proveedor = $this->input->post('proveedor');
+		$datos = $this->FunctionsModel->proveedorbyname($proveedor);
+		if($datos){
+			// $proveedor = array($datos);
+			echo json_encode($datos);
+			// return $datos;
+		}else{
+			return false;
+		}
+
 	}
 
 	public function insert_proveedor(){
@@ -1256,8 +1284,6 @@ class FunctionsController extends CI_Controller {
 			}
 		}
 
-
-
 		public function update_requisicion(){
 		
 			$id = $this->input->post('id');
@@ -1441,6 +1467,18 @@ class FunctionsController extends CI_Controller {
 					}
 		}
 	
+	}
+
+	public function reqbyorder(){
+		$id = $this->input->post('id_orden');
+		$datos = $this->FunctionsModel->reqbyorder($id);
+		if($datos){
+			// $proveedor = array($datos);
+			echo json_encode($datos);
+			// return $datos;
+		}else{
+			return false;
+		}
 	}
 
 	public function delete_orden(){

@@ -70,8 +70,10 @@
                     </td>
 
                     <td>
-                    <button title="PDF" type="button" class="btn btn-warning" id="btn-pdf" data-toggle="modal" data-target=".modal_pdf">
+                    <button title="PDF" type="button" class="btn btn-warning btnpdf" id="btn-pdf" data-bs-toggle="modal" data-bs-target="#modal_pdf"
+                    value="<?php echo $value['PROVEEDOR'];?>">
                     <i class="fas fa-file-pdf"></i></button>
+                    <input type="hidden" name="id-orden" id="id_orden" value="<?php echo $value['ID'];?>"/>
                     </td>
 
                     <td><button title="Editar" type="button" class="btn btnedit" id="btn-edit" data-bs-toggle="modal"
@@ -176,16 +178,131 @@
 
 <!-- Large modal -->
 
-<div class="modal fade modal_pdf" id="modal_pdf" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      ...
-    </div>
+<div class="modal modalpdf" id="modal_pdf" tabindex="-1" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+        
+                <div class="modal-header">
+                    <img src="<?php echo base_url();?>application/assets/img/tda.jpg" weigth="50px" height="50px">
+                    <?php foreach ($tb as $row => $value) { ?>
+                    <h5 class="modal-title" style="text-align:center !important">ORDEN DE COMPRA #<?php echo $value['ID'];?>  </h5>
+                    <p> <label style="color:black !important;">FECHA:</label> <span style="font-weight:bolder;"><?php echo date('d/m/Y',strtotime($value['FECHA']));?></span>
+                    <br> <label style="color:black !important;">FOLIO:</label> <span style="font-weight:bolder;"><?php echo $value['FOLIO'];?></span>
+                    <?php }?>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+
+
+                <div class="modal-body">
+
+                        <div class="row" style="background-color:#2e7cf5 !important;">
+                            <div class="col-md-4">
+                            <label style="color:white !important; font-weight:bolder !important;">TRANSPORTES DAVILA SA DE CV</label>
+                            <label style="color:white !important; font-weight:bolder !important;">TDA010727UD7</label>
+                            </div>
+
+                            <div class="col-md-4">
+                            <label style="color:white !important; font-weight:bolder !important;">Nicolas Michelena 1128 <br>
+                                        Hacienda de Santa Catarina <br>
+                                        Ciudad de Santa Catarina <br>
+                                        Santa Catarina <br>
+                                        México
+                            </label>
+                            </div>
+
+                            <div class="col-md-4">
+                            <label style="color:white !important; font-weight:bolder !important;">
+                            66357 <br>
+                            Nuevo León
+                            </label>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                            <?php foreach ($tb as $row => $value) { ?>
+                            <label style="color:black !important;"> CLIENTE: </label> <span style="font-weight:bolder; color:black !important;font-size: 12px !important;"><?php echo $value['PROVEEDOR'];?></span> <br>
+                            <label style="color:black !important;"> RFC: </label> <span style="font-weight:bolder; color:black !important;font-size: 12px !important;"><?php echo $value['RFC'];?></span> <br>
+                            <?php }?>
+                            <label style="color:black !important;"> CORREO: </label> <span style="font-weight:bolder; color:black !important; font-size: 12px !important;" id="md-correo"></span> <br>
+                            <label style="color:black !important;"> TELEFONO: </label> <span style="font-weight:bolder; color:black !important; font-size: 12px !important;" id="md-telefono"></span> <br>
+                            <label style="color:black !important;"> MUNICIPIO: </label> <span style="font-weight:bolder; color:black !important; font-size: 12px !important;" id="md-municipio"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                            <label style="color:black !important;"> CALLE: </label> <span style="font-weight:bolder; color:black !important; font-size: 12px !important;" id="md-calle"></span> <br>
+                            <label style="color:black !important;"> NO.EXT: </label> <span style="font-weight:bolder; color:black !important; font-size: 12px !important;" id="md-noext"></span><br>
+                            <label style="color:black !important;"> COLONIA: </label> <span style="font-weight:bolder; color:black !important; font-size: 12px !important;" id="md-colonia"></span><br>
+                            <label style="color:black !important;"> C.P.: </label> <span style="font-weight:bolder; color:black !important; font-size: 12px !important;" id="md-cp"></span><br>
+                            <label style="color:black !important;"> ESTADO: </label> <span style="font-weight:bolder; color:black !important; font-size: 12px !important;" id="md-estado"></span>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-sm table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">FECHA</th>
+                                        <th scope="col">UNIDAD</th>
+                                        <th scope="col">CANTIDAD</th>
+                                        <th scope="col">UMED</th>
+                                        <th scope="col">DESCRIPCION</th>
+                                        <th scope="col">ORDEN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbreq">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                            <?php foreach ($tb as $row => $value) { ?>
+                            <label style="color:black !important;"> SUBTOTAL: </label> <span style="font-weight:bolder; color:black !important;font-size: 12px !important;"><?php echo $value['SUBTOTAL'];?></span> <br>
+                            <label style="color:black !important;"> IVA: </label> <span style="font-weight:bolder; color:black !important;font-size: 12px !important;"><?php echo $value['IVA'];?></span> <br>
+                            <label style="color:black !important;"> TOTAL: </label> <span style="font-weight:bolder; color:black !important;font-size: 12px !important;"><?php echo $value['TOTAL'];?></span> <br>
+                            <?php }?>
+                            </div>
+
+                            <div class="col-md-6">
+                            <?php foreach ($tb as $row => $value) { ?>
+                            <label style="color:black !important;">METODO DE PAGO:</label> <span style="font-weight:bolder; color:black !important;font-size: 12px !important;"><?php echo $value['METODO'];?></span> <br>
+                            <?php }?>
+                            </div>
+                        </div>
+                        <hr>  
+
+                        <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <input type="text" style="outline: 0 !important;  border-width: 0 0 2px !important; border-color: black !important;" readonly> <br>
+                                    <label style="color:black !important;">FIRMA DE CONFORMIDAD</label>
+                                </div>
+                            
+                                <div class="col-md-4"></div>
+                        </div>    
+
+                        <div class="row">
+                        <div class="col-md-12" style="text-align: center !important;">
+                               <button type="submit" class="btn btn-primary btn-export">PDF</button>
+                        </div>
+                        </div>   
+
+                </div>
+        </div>
   </div>
 </div>
 
-
 <script>
+
+//DATA TABLES//
 $(document).ready(function() {
     $('#table_id').DataTable({
         "scrollY": 340,
@@ -258,29 +375,28 @@ $(document).ready(function() {
     });
 });
 
-//MODAL EDITAR//
+//PROVEEDOR BY NAME
 $(document).ready(function() {
-    $(document).on("click", ".btnedit", function(event) {
-        var id = $(this).val();
-        if (id != "") {
+    $(document).on("click", ".btnpdf", function(event) {
+        var proveedor = $(this).val();
+        if (proveedor != "") {
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url(); ?>FunctionsController/orden",
+                url: "<?php echo base_url(); ?>FunctionsController/proveedorbyname",
                 data: {
-                    id: id
+                    proveedor: proveedor
                 },
                 success: function(result) {
                     var result = JSON.parse(result);
                     $.each(result, function(i, result) {
-                        $("#id_edt").val(result.ID);
-                        $("#fecha_edt").val(result.FECHA);
-                        $("#proveedor_edt").val(result.PROVEEDOR);
-                        $("#rfc_edt").val(result.RFC);
-                        $("#folio_edt").val(result.FOLIO);
-                        $("#metodo_edt").val(result.METODO);
-                        $("#subtotal_edt").val(result.SUBTOTAL);
-                        $("#iva_edt").val(result.IVA);
-                        $("#total_edt").val(result.TOTAL);
+                        $("#md-municipio").text(result.MUNICIPIO);
+                        $("#md-correo").text(result.CORREO);
+                        $("#md-telefono").text(result.TELEFONO);
+                        $("#md-calle").text(result.CALLE);
+                        $("#md-noext").text(result.NOEXT);
+                        $("#md-colonia").text(result.COLONIA);
+                        $("#md-cp").text(result.CP);
+                        $("#md-estado").text(result.ESTADO);
                     });
                 },
             });
@@ -288,6 +404,7 @@ $(document).ready(function() {
     });   
 });
 
+//CALCULAR SUBTOTAL
 $(document).ready(function() {
     $('.subtotal').on('keypress', function(event) {
         var subtotal = $(this).val();
@@ -305,6 +422,7 @@ $(document).ready(function() {
     });
 });
 
+//RFC BY PROVEEDOR
 $(document).ready(function() {
     $('.proveedor').on('change', function(event) {
         var proveedor = $(this).val();
@@ -326,8 +444,6 @@ $(document).ready(function() {
 
     });
 });
-
-
 
 //UPDATE//
 $(document).ready(function() {
@@ -381,12 +497,111 @@ $(document).ready(function() {
                     $("#main").load('<?php echo base_url(); ?>FunctionsController/ordenes',{id_user:id_user});  
                     }
         });
-    });
+});
 
+//FLOAT STYLE
 $(document).ready(function() {
     $('.subtotal').on('input', function() {
         this.value = this.value.replace(/[^0-9,.]/g, '').replace(/,/g, '.');
     });
 });
 
+//MODAL EDITAR//
+$(document).ready(function() {
+    $(document).on("click", ".btnedit", function(event) {
+        var id = $(this).val();
+        if (id != "") {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>FunctionsController/orden",
+                data: {
+                    id: id
+                },
+                success: function(result) {
+                    var result = JSON.parse(result);
+                    $.each(result, function(i, result) {
+                        $("#id_edt").val(result.ID);
+                        $("#fecha_edt").val(result.FECHA);
+                        $("#proveedor_edt").val(result.PROVEEDOR);
+                        $("#rfc_edt").val(result.RFC);
+                        $("#folio_edt").val(result.FOLIO);
+                        $("#metodo_edt").val(result.METODO);
+                        $("#subtotal_edt").val(result.SUBTOTAL);
+                        $("#iva_edt").val(result.IVA);
+                        $("#total_edt").val(result.TOTAL);
+                    });
+                },
+            });
+        }
+    });   
+});
+
+//MODAL TABLE//
+$(document).ready(function() {
+    $(document).on("click", ".btnpdf", function(event) {
+        var id_orden = $("#id_orden").val();
+        if (id_orden != "") {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>FunctionsController/reqbyorder",
+                data: {
+                    id_orden: id_orden
+                },
+                success: function(result) {
+                    var result = JSON.parse(result);
+                    $.each(result, function(i, result) {
+                        
+                        var id = result.ID;
+                        var fecha = result.FECHA;
+                        var unidad = result.UNIDAD;
+                        var cantidad = result.CANTIDAD;
+                        var umed = result.UMED;
+                        var descripcion = result.DESCRIPCION;
+                        var area = result.AREA;
+                        var orden = result.ORDEN;
+
+                        var tbody = $('#tbreq');
+                        var table = $('<tr>'+
+
+                        '<td>'+id+'</td>'+
+                        '<td>'+fecha+'</td>'+
+                        '<td>'+unidad+'</td>'+
+                        '<td>'+cantidad+'</td>'+
+                        '<td>'+umed+'</td>'+
+                        '<td>'+descripcion+'</td>'+
+                        // '<td>'+area+'</td>'+
+                        '<td>'+orden+'</td>'+
+                        '</tr>');
+                       
+                        tbody.append(table);
+
+                    });
+                },
+            });
+        }
+    });   
+});
+
+//TO PDF
+
+
+</script>
+
+<script>
+window.jsPDF = window.jspdf.jsPDF;
+$(document).ready(function() {
+    $(document).on("click", ".btn-export", function(event) {
+
+        var pdf = new jsPDF('p', 'pt', 'letter');
+		pdf.html(document.body, {
+			callback: function (pdf) {
+				var iframe = document.createElement('iframe');
+				iframe.setAttribute('style', 'position:absolute;right:0; top:0; bottom:0; height:100%; width:500px');
+				document.body.appendChild(iframe);
+				iframe.src = pdf.output('datauristring');
+			}
+		});
+        
+    });
+});
 </script>
